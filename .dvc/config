@@ -1,4 +1,6 @@
 [core]
-    remote = mlopsdata
+    remote = mydata
 ['remote "mlopsdata"']
+    url = s3://mlopsprojectwork/mydata/
+['remote "mydata"']
     url = s3://mlopsprojectwork/mydata/
