@@ -52,6 +52,9 @@ jobs:
         run: 
           echo "AWS credentials set"
 
+      - name: Install DVC with S3 support
+        run: pip install dvc[s3]
+
       - name: Pull DVC data
         run: dvc pull
 
