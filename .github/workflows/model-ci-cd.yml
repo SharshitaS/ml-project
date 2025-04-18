@@ -49,3 +49,4 @@ jobs:
         run: |
           # Add your deployment command here
           echo "Deploying model..."
+          python3 main.py
