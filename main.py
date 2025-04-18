@@ -78,9 +78,10 @@ def train_with_mlflow():
         logging.info("Model evaluation completed successfully")
         
         # Tags 
-        mlflow.set_tag('Model developer', 'prsdm')
+
+        mlflow.set_tag('Model developer', 'har')
         mlflow.set_tag('preprocessing', 'OneHotEncoder, Standard Scaler, and MinMax Scaler')
-        
+       
         # Log metrics
         model_params = config['model']['params']
         mlflow.log_params(model_params)
@@ -88,7 +89,20 @@ def train_with_mlflow():
         mlflow.log_metric("roc", roc_auc_score)
         mlflow.log_metric('precision', report['weighted avg']['precision'])
         mlflow.log_metric('recall', report['weighted avg']['recall'])
-        mlflow.sklearn.log_model(trainer.pipeline, "model")
+        artifact_uri = mlflow.get_artifact_uri("model")
+        
+        print("Artifact URI:", artifact_uri)
+        print("Model logged at:", artifact_uri)
+
+
+        try:
+            # Your MLflow logging and model training
+            mlflow.sklearn.log_model(trainer.pipeline, "model")
+        except Exception as e:
+            print("❌ MLflow logging failed:", e)
+            raise
+        #mlflow.sklearn.log_model(trainer.pipeline, "model")
+
                 
         # Register the model
         model_name = "insurance_model" 
